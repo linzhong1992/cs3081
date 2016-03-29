@@ -12,6 +12,7 @@
 #include <GL/glui.h>
 
 
+
 /** This is a base class for graphics applications built on top of the GLUT and GLUI toolkits.
     GLUT and GLUI are C libraries, so one function of this class is to wrap the funcationality
     they provide in a class structure that lends itself to C++.  To receive callbaks from 

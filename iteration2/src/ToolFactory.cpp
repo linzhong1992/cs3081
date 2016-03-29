@@ -46,8 +46,10 @@ Tool* ToolFactory::createTool(int toolID)
 			tool = new TChalk();
 			break;
 		case TOOL_STAMP:
+			tool = new TPen();
 			break;
 		case TOOL_BLUR:
+			tool = new TPen();
 			break;
 		default:
 			tool = NULL;
