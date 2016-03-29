@@ -83,8 +83,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-apple-darwin14.5.0
-host_triplet = x86_64-apple-darwin14.5.0
+build_triplet = x86_64-unknown-linux-gnu
+host_triplet = x86_64-unknown-linux-gnu
 check_PROGRAMS = pngtest$(EXEEXT) pngunknown$(EXEEXT) \
 	pngstest$(EXEEXT) pngvalid$(EXEEXT) pngimage$(EXEEXT)
 bin_PROGRAMS = pngfix$(EXEEXT) png-fix-itxt$(EXEEXT)
@@ -93,10 +93,10 @@ bin_PROGRAMS = pngfix$(EXEEXT) png-fix-itxt$(EXEEXT)
 
 
 #   Versioned symbols and restricted exports
-##am__append_2 = -Wl,-M -Wl,libpng.vers
-#am__append_3 = -Wl,--version-script=libpng.vers
+#am__append_2 = -Wl,-M -Wl,libpng.vers
+am__append_3 = -Wl,--version-script=libpng.vers
 #   Only restricted exports when possible
-am__append_4 = -export-symbols libpng.sym
+#am__append_4 = -export-symbols libpng.sym
 #am__append_5 = -DPNG_PREFIX=''
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
@@ -485,15 +485,15 @@ distcleancheck_listfiles = find . -type f -print
 
 #distribute headers in /usr/include/libpng/*
 pkgincludedir = $(includedir)/$(PNGLIB_BASENAME)
-ACLOCAL = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/missing aclocal-1.14
+ACLOCAL = ${SHELL} /home/johnson/cs3081/iteration2/png/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/missing autoconf
-AUTOHEADER = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/missing autoheader
-AUTOMAKE = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/missing automake-1.14
-AWK = awk
+AUTOCONF = ${SHELL} /home/johnson/cs3081/iteration2/png/missing autoconf
+AUTOHEADER = ${SHELL} /home/johnson/cs3081/iteration2/png/missing autoheader
+AUTOMAKE = ${SHELL} /home/johnson/cs3081/iteration2/png/missing automake-1.14
+AWK = mawk
 CC = gcc
 CCAS = gcc
 CCASDEPMODE = depmode=gcc3
@@ -513,38 +513,38 @@ DEPDIR = .deps
 # checks for this and sets DFNCPP appropriately.
 DFNCPP = gcc -E
 DLLTOOL = false
-DSYMUTIL = dsymutil
+DSYMUTIL = 
 DUMPBIN = 
-ECHO_C = \c
-ECHO_N = 
+ECHO_C = 
+ECHO_N = -n
 ECHO_T = 
-EGREP = /usr/bin/grep -E
+EGREP = /bin/grep -E
 EXEEXT = 
-FGREP = /usr/bin/grep -F
-GREP = /usr/bin/grep
+FGREP = /bin/grep -F
+GREP = /bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lz 
+LIBS = -lm -lz -lm 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIPO = lipo
+LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/missing makeinfo
+MAKEINFO = ${SHELL} /home/johnson/cs3081/iteration2/png/missing makeinfo
 MANIFEST_TOOL = :
-MKDIR_P = ./install-sh -c -d
-NM = /usr/bin/nm
-NMEDIT = nmedit
-OBJDUMP = false
+MKDIR_P = /bin/mkdir -p
+NM = /usr/bin/nm -B
+NMEDIT = 
+OBJDUMP = objdump
 OBJEXT = o
-OTOOL = otool
-OTOOL64 = :
+OTOOL = 
+OTOOL64 = 
 PACKAGE = libpng
 PACKAGE_BUGREPORT = png-mng-implement@lists.sourceforge.net
 PACKAGE_NAME = libpng
@@ -565,16 +565,16 @@ PNG_COPTS =
 PNG_PREFIX = 
 POW_LIB = 
 RANLIB = ranlib
-SED = /usr/bin/sed
+SED = /bin/sed
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = strip
 SYMBOL_PREFIX = 
 VERSION = 1.6.16
-abs_builddir = /Users/johnson/class-repo/project-solutions/iteration1/png
-abs_srcdir = /Users/johnson/class-repo/project-solutions/iteration1/png
-abs_top_builddir = /Users/johnson/class-repo/project-solutions/iteration1/png
-abs_top_srcdir = /Users/johnson/class-repo/project-solutions/iteration1/png
+abs_builddir = /home/johnson/cs3081/iteration2/png
+abs_srcdir = /home/johnson/cs3081/iteration2/png
+abs_top_builddir = /home/johnson/cs3081/iteration2/png
+abs_top_srcdir = /home/johnson/cs3081/iteration2/png
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -587,26 +587,26 @@ am__untar = $${TAR-tar} xf -
 # generate the -config scripts if required
 binconfigs = libpng16-config
 bindir = ${exec_prefix}/bin
-build = x86_64-apple-darwin14.5.0
+build = x86_64-unknown-linux-gnu
 build_alias = 
 build_cpu = x86_64
-build_os = darwin14.5.0
-build_vendor = apple
+build_os = linux-gnu
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = x86_64-apple-darwin14.5.0
+host = x86_64-unknown-linux-gnu
 host_alias = 
 host_cpu = x86_64
-host_os = darwin14.5.0
-host_vendor = apple
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/johnson/class-repo/project-solutions/iteration1/png/install-sh
+install_sh = ${SHELL} /home/johnson/cs3081/iteration2/png/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -619,7 +619,7 @@ pdfdir = ${docdir}
 # pkg-config stuff, note that libpng.pc is always required in order
 # to get the correct library
 pkgconfigdir = ${libdir}/pkgconfig
-prefix = /Users/johnson/class-repo/project-solutions/iteration1/png
+prefix = /home/johnson/cs3081/iteration2/png
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -701,8 +701,8 @@ libpng16_la_LDFLAGS = -no-undefined \
 	-export-dynamic -version-number \
 	16:16:0 \
 	$(am__append_2) $(am__append_3) $(am__append_4)
-libpng16_la_DEPENDENCIES = libpng.sym
-#libpng16_la_DEPENDENCIES = libpng.vers
+#libpng16_la_DEPENDENCIES = libpng.sym
+libpng16_la_DEPENDENCIES = libpng.vers
 pkginclude_HEADERS = png.h pngconf.h
 nodist_pkginclude_HEADERS = pnglibconf.h
 pkgconfig_DATA = libpng16.pc
