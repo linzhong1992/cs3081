@@ -97,6 +97,6 @@ $(GLUI_LIB):
 
 $(PNG_LIB):
 	cd $(PNG_PATH);\
-	./configure --prefix=/home/johnson/cs3081/iteration2/png --enable-shared=no
+	./configure --prefix=/home/johnson/linx0544/iteration2/png --enable-shared=no
 	# $(MAKE) -C $(PNG_PATH) check
 	$(MAKE) -C $(PNG_PATH) install

@@ -7,7 +7,7 @@
 #define FLASHPHOTOAPP_H
 
 #include "BaseGfxApp.h"
-#include <png.h>
+
 
 class ColorData;
 class PixelBuffer;
@@ -63,8 +63,8 @@ private:
         UI_QUIT
     };
     void setImageFile(const std::string & filepath);
-    png_bytep *read_png_file(const char *file_name);
-    void abort_(const char * s, ...);
+    //png_bytep *read_png_file(const char *file_name);
+    //void abort_(const char * s, ...);
     bool isValidImageFileName(const std::string & name);
     bool isValidImageFile(const std::string & name);
     bool hasSuffix(const std::string & str, const std::string & suffix);
