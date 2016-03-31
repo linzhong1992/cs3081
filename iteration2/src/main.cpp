@@ -6,7 +6,7 @@
 
 #include "FlashPhotoApp.h"
 #include "ColorData.h"
-#include <png.h>
+
 
 int main(int argc, char* argv[]) {
 	FlashPhotoApp *app = new FlashPhotoApp(argc, argv, 800, 600, ColorData(1,1,0.95));
@@ -141,6 +141,7 @@ int main(int argc, char* argv[]) {
 //   if(argc != 3) abort();
 
 //   read_png_file(argv[1]);
+//   printf("File READ!!\n");
 //   process_png_file();
 //   write_png_file(argv[2]);
 

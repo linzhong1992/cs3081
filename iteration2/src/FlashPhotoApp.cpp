@@ -12,7 +12,6 @@
 #include <string.h>
 #include <stdarg.h>
 
-//#include <zlib.h>
 
 using std::cout;
 using std::endl;
@@ -427,6 +426,66 @@ void FlashPhotoApp::gluiControl(int controlID)
 void FlashPhotoApp::loadImageToCanvas()
 {
     cout << "Load Canvas has been clicked for file " << m_fileName << endl;
+    FILE *imageFile;
+    PixelBuffer *imageBuffer;
+    int width, height;
+    if((imageFile = fopen(m_fileName.c_str(), "rb")) == NULL) {
+        fprintf(stderr, "Failed to open %s\n", m_fileName.c_str());
+        return;
+    }
+    if(hasSuffix(m_fileName, ".png")) {
+        /*if selected file is a ".png" file*/
+        png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        png_infop info = png_create_info_struct(png);
+        png_byte color_type;
+        png_bytep *row_pointers;
+        if(setjmp(png_jmpbuf(png))) {
+            png_destroy_read_struct(&png, &info, NULL);
+            fclose(imageFile);
+            return;
+        }
+        png_init_io(png, imageFile);
+        png_read_info(png, info);
+
+        width = png_get_image_width(png, info);
+        height = png_get_image_height(png, info);
+        color_type = png_get_color_type(png, info);
+
+        if(png_get_bit_depth(png, info) < 8)
+            png_set_packing(png);
+        if(color_type == PNG_COLOR_TYPE_PALETTE)
+            png_set_palette_to_rgb(png);
+        if(png_get_valid(png, info, PNG_INFO_tRNS))
+            png_set_tRNS_to_alpha(png);
+        if(color_type == PNG_COLOR_TYPE_RGB || color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_PALETTE)
+            png_set_filler(png, 0xFF, PNG_FILLER_AFTER);
+        if(color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+            png_set_gray_to_rgb(png);
+
+        png_read_update_info(png, info);
+
+        // allocate memory for row pointers.
+        row_pointers = new png_bytep[height*sizeof(png_bytep)];
+        for (int i = 0; i < height; ++i)
+            row_pointers[i] = new png_byte[png_get_rowbytes(png, info)];
+
+        png_read_image(png, row_pointers);  // read bytes from images
+        png_read_end(png, NULL);
+        png_destroy_read_struct(&png, &info, NULL);
+        imageBuffer = new PixelBuffer(width, height, ColorData());
+        setWindowDimensions(width, height);
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                imageBuffer->setPixel(j, height - i - 1, ColorData((float)row_pointers[i][j*4]/255.0, (float)row_pointers[i][j*4+1]/255.0, (float)row_pointers[i][j*4+2]/255.0, (float)row_pointers[i][j*4+3]/255.0));
+                // printf("%d %d: %f %f %f %f\n",j, i, (float)row_pointers[i][j*4], (float)row_pointers[i][j*4+1], (float)row_pointers[i][j*4+2], (float)row_pointers[i][j*4+3] );
+            }
+        }
+        // free row_pointers
+        for (int i = 0; i < height; ++i)
+            delete row_pointers[i];
+        delete [] row_pointers;
+    }
+    m_displayBuffer = imageBuffer;
 }
 
 void FlashPhotoApp::loadImageToStamp()
@@ -580,79 +639,74 @@ void FlashPhotoApp::initGraphics() {
 }
 
 
-// void FlashPhotoApp::abort_(const char * s, ...)
-// {
-//         va_list args;
-//         va_start(args, s);
-//         vfprintf(stderr, s, args);
-//         fprintf(stderr, "\n");
-//         va_end(args);
-//         abort();
-// }
 
+// void FlashPhotoApp::read_png_file(const char* filename) {
+//   FILE *fp = fopen(filename, "rb");
 
-// png_bytep *FlashPhotoApp::read_png_file(const char* file_name)
-// {
-//         int x, y;
+//   png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+//   if(!png) abort();
 
-//         int width, height;
-//         png_byte color_type;
-//         png_byte bit_depth;
+//   png_infop info = png_create_info_struct(png);
+//   if(!info) abort();
 
-//         png_structp png_ptr;
-//         png_infop info_ptr;
-//         int number_of_passes;
-//         png_bytep * row_pointers;
-//         char header[8];    // 8 is the maximum size that can be checked
+//   if(setjmp(png_jmpbuf(png))) abort();
 
-//         /* open file and test for it being a png */
-//         FILE *fp = fopen(file_name, "rb");
-//         if (!fp)
-//                 abort_("[read_png_file] File %s could not be opened for reading", file_name);
-//         fread(header, 1, 8, fp);
-//         // if (png_sig_cmp(header, 0, 8))
-//         //         abort_("[read_png_file] File %s is not recognized as a PNG file", file_name);
+//   png_init_io(png, fp);
 
+//   png_read_info(png, info);
 
-//         /* initialize stuff */
-//         png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+//   width      = png_get_image_width(png, info);
+//   height     = png_get_image_height(png, info);
+//   color_type = png_get_color_type(png, info);
+//   bit_depth  = png_get_bit_depth(png, info);
 
-//         if (!png_ptr)
-//                 abort_("[read_png_file] png_create_read_struct failed");
+//   // Read any color_type into 8bit depth, RGBA format.
+//   // See http://www.libpng.org/pub/png/libpng-manual.txt
 
-//         info_ptr = png_create_info_struct(png_ptr);
-//         if (!info_ptr)
-//                 abort_("[read_png_file] png_create_info_struct failed");
+//   if(bit_depth == 16)
+//     png_set_strip_16(png);
 
-//         if (setjmp(png_jmpbuf(png_ptr)))
-//                 abort_("[read_png_file] Error during init_io");
+//   if(color_type == PNG_COLOR_TYPE_PALETTE)
+//     png_set_palette_to_rgb(png);
 
-//         png_init_io(png_ptr, fp);
-//         png_set_sig_bytes(png_ptr, 8);
+//   // PNG_COLOR_TYPE_GRAY_ALPHA is always 8 or 16bit depth.
+//   if(color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+//     png_set_expand_gray_1_2_4_to_8(png);
 
-//         png_read_info(png_ptr, info_ptr);
+//   if(png_get_valid(png, info, PNG_INFO_tRNS))
+//     png_set_tRNS_to_alpha(png);
 
-//         width = png_get_image_width(png_ptr, info_ptr);
-//         height = png_get_image_height(png_ptr, info_ptr);
-//         color_type = png_get_color_type(png_ptr, info_ptr);
-//         bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+//   // These color_type don't have an alpha channel then fill it with 0xff.
+//   if(color_type == PNG_COLOR_TYPE_RGB ||
+//      color_type == PNG_COLOR_TYPE_GRAY ||
+//      color_type == PNG_COLOR_TYPE_PALETTE)
+//     png_set_filler(png, 0xFF, PNG_FILLER_AFTER);
 
-//         number_of_passes = png_set_interlace_handling(png_ptr);
-//         png_read_update_info(png_ptr, info_ptr);
+//   if(color_type == PNG_COLOR_TYPE_GRAY ||
+//      color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+//     png_set_gray_to_rgb(png);
 
+//   png_read_update_info(png, info);
 
-//         /* read file */
-//         if (setjmp(png_jmpbuf(png_ptr)))
-//                 abort_("[read_png_file] Error during read_image");
+//   row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
+//   for(int y = 0; y < height; y++) {
+//     row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png,info));
+//   }
 
-//         row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
-//         for (y=0; y<height; y++)
-//                 row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));
-
-//         png_read_image(png_ptr, row_pointers);
-
-//         fclose(fp);
-//         return row_pointers;
+//   png_read_image(png, row_pointers);
+// png_read_end(png, NULL);
+// png_destroy_read_struct(&png, &info, NULL);
+//   fclose(fp);
+//   cout << "row_pointers is :::::" << (int) row_pointers[10][10] << endl;
+//   PixelBuffer *imageBuffer = new PixelBuffer(width, height, ColorData());
+//   for(int i = 0; i < height; i++) {
+//     for(int j = 0; j < width; j++) {
+//         imageBuffer->setPixel(j, height - i - 1, ColorData((float)row_pointers[i][j*4]/255.0, (float)row_pointers[i][j*4+1]/255.0, (float)row_pointers[i][j*4+2]/255.0, (float)row_pointers[i][j*4+3]/255.0));
+//     }
+//   }
+//     for (int i = 0; i < height; ++i)
+//         delete row_pointers[i];
+//     delete [] row_pointers;
 // }
 
 void FlashPhotoApp::setImageFile(const std::string & fileName)
@@ -695,7 +749,7 @@ void FlashPhotoApp::setImageFile(const std::string & fileName)
         loadCanvasEnabled(false);
         m_gluiControlHooks.currentFileLabel->set_text("Will load: none");
     }
-    //png_bytep *row_pointers = read_png_file(imageFile.c_str());
-    //cout << "Lets look at row_pointers:" << row_pointers[10][10] << endl;
-}
+    // read_png_file(imageFile.c_str());
+    // cout << "Lets look at row_pointers:" << row_pointers[10] << endl;
 
+}
