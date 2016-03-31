@@ -7,7 +7,7 @@
 EXECUTABLE = FlashPhoto
 SOURCE_DIR = src
 OBJECT_DIR = build
-CURR_DIR = $(shell pwd)
+
 
 # Define the list of files to compile for this project. Defaults to all
 # of the .cpp files in the source directory.
@@ -30,11 +30,24 @@ LDFLAGS = -g
 
 # We use the GLUI library for our graphical user interface.  So, we
 # also need to add compiler and linker arguments for GLUI.
-GLUI_PATH = $(CURR_DIR)/glui
+GLUI_PATH = ./glui
 INCLUDE += -I$(GLUI_PATH)/include
 LINK_LIBS +=  -L$(GLUI_PATH)/lib/ -lglui -lpthread
 GLUI_LIB = $(GLUI_PATH)/lib/libglui.a
 
+# We use the libpng and libjpeg library for loading images.
+CURR_DIR = $(shell pwd)
+# JPEG_PATH = ./jpeg-9a
+# JPEG_BUILD_PATH = $(CURR_DIR)/jpeg-9a
+# JPEG_LIB = $(JPEG_PATH)/lib/libjpeg.a
+# INCLUDE += -I$(JPEG_PATH)/include
+# LINK_LIBS += -L$(JPEG_PATH)/lib/ -ljpeg
+
+PNG_PATH = ./png
+PNG_BUILD_PATH = $(CURR_DIR)/png
+PNG_LIB = ./png/lib/libpng.a
+INCLUDE += -I$(PNG_PATH)/include
+LINK_LIBS += -L$(PNG_PATH)/lib/ -lpng -lz
 
 # For graphics support, we also need to link with the Glut and OpenGL libraries.
 # This is specified differently depending on whether we are on linux or OSX.
@@ -53,13 +66,6 @@ endif
 ifneq ($(NVIDIA_LIB), )
 	LINK_LIBS += -L$(NVIDIA_LIB)
 endif
-
-# We use the PNG library for uploading .png images.  So, we
-# also need to add compiler and linker arguments for PNG.
-PNG_PATH = $(CURR_DIR)/png
-INCLUDE += -I$(PNG_PATH)/include
-LINK_LIBS +=  -L$(PNG_PATH)/lib/ -lpng -lz
-PNG_LIB = $(PNG_PATH)/lib/libpng.a
 
 
 
@@ -82,7 +88,7 @@ setup: | $(OBJECT_DIR)
 $(OBJECT_DIR): 
 	mkdir -p $(OBJECT_DIR)
 
-$(EXECUTABLE): $(GLUI_LIB) $(PNG_LIB) $(OBJFILES)
+$(EXECUTABLE): $(OBJFILES) $(GLUI_LIB) $(PNG_LIB)
 	$(CC) $(LDFLAGS) $(OBJFILES) $(LINK_LIBS) -o $@
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cpp
@@ -95,7 +101,8 @@ $(GLUI_LIB):
 	$(MAKE) -C $(GLUI_PATH) all
 
 $(PNG_LIB):
-	cd $(PNG_PATH);\
-	./configure --prefix=$(PNG_PATH) --enable-shared=no
-	# $(MAKE) -C $(PNG_PATH) check
-	$(MAKE) -C $(PNG_PATH) install
+	cd $(PNG_PATH); ./configure --prefix=$(PNG_BUILD_PATH) --enable-shared=no; $(MAKE) install
+
+# $(JPEG_LIB):
+# 	cd $(JPEG_PATH); ./configure --prefix=$(JPEG_BUILD_PATH) --enable-shared=no; $(MAKE) install
+

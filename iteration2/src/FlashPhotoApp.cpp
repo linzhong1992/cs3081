@@ -432,32 +432,41 @@ void FlashPhotoApp::loadImageToCanvas()
     if((imageFile = fopen(m_fileName.c_str(), "rb")) == NULL) {
         fprintf(stderr, "Failed to open %s\n", m_fileName.c_str());
         return;
-    }
+    };
     if(hasSuffix(m_fileName, ".png")) {
         /*if selected file is a ".png" file*/
         png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         png_infop info = png_create_info_struct(png);
         png_byte color_type;
         png_bytep *row_pointers;
+        png_byte bit_depth;
         if(setjmp(png_jmpbuf(png))) {
             png_destroy_read_struct(&png, &info, NULL);
             fclose(imageFile);
             return;
         }
+
+        // Start to load imageFile into png
         png_init_io(png, imageFile);
+        
         png_read_info(png, info);
 
         width = png_get_image_width(png, info);
         height = png_get_image_height(png, info);
         color_type = png_get_color_type(png, info);
+        bit_depth = png_get_bit_depth(png, info);
 
-        if(png_get_bit_depth(png, info) < 8)
-            png_set_packing(png);
+        if(bit_depth == 16)
+            png_set_strip_16(png);
         if(color_type == PNG_COLOR_TYPE_PALETTE)
             png_set_palette_to_rgb(png);
+        if(color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+            png_set_expand_gray_1_2_4_to_8(png);
         if(png_get_valid(png, info, PNG_INFO_tRNS))
             png_set_tRNS_to_alpha(png);
-        if(color_type == PNG_COLOR_TYPE_RGB || color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_PALETTE)
+        if(color_type == PNG_COLOR_TYPE_RGB ||
+            color_type == PNG_COLOR_TYPE_GRAY ||
+            color_type == PNG_COLOR_TYPE_PALETTE)
             png_set_filler(png, 0xFF, PNG_FILLER_AFTER);
         if(color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
             png_set_gray_to_rgb(png);
@@ -471,21 +480,28 @@ void FlashPhotoApp::loadImageToCanvas()
 
         png_read_image(png, row_pointers);  // read bytes from images
         png_read_end(png, NULL);
+        // image read finished, so we can close the imageFile
+        fclose(imageFile);
         png_destroy_read_struct(&png, &info, NULL);
+        // Reshape the window size
+        
+        // Create a new pixelbuffer with new size
         imageBuffer = new PixelBuffer(width, height, ColorData());
-        setWindowDimensions(width, height);
+
         for(int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
                 imageBuffer->setPixel(j, height - i - 1, ColorData((float)row_pointers[i][j*4]/255.0, (float)row_pointers[i][j*4+1]/255.0, (float)row_pointers[i][j*4+2]/255.0, (float)row_pointers[i][j*4+3]/255.0));
-                // printf("%d %d: %f %f %f %f\n",j, i, (float)row_pointers[i][j*4], (float)row_pointers[i][j*4+1], (float)row_pointers[i][j*4+2], (float)row_pointers[i][j*4+3] );
-            }
+            } 
         }
         // free row_pointers
-        for (int i = 0; i < height; ++i)
-            delete row_pointers[i];
-        delete [] row_pointers;
+        for(int y = 0; y < height; y++) {
+            free(row_pointers[y]);
+        }
+        free(row_pointers);
     }
+    //Update the m_displayBuffer
     m_displayBuffer = imageBuffer;
+    setWindowDimensions(width, height);
 }
 
 void FlashPhotoApp::loadImageToStamp()
@@ -495,7 +511,47 @@ void FlashPhotoApp::loadImageToStamp()
 
 void FlashPhotoApp::saveCanvasToFile()
 {
-    cout << "Save Canvas been clicked for file " << m_fileName << endl;
+  int y;
+
+  FILE *fp = fopen(filename, "wb");
+  if(!fp) abort();
+
+  png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if (!png) abort();
+
+  png_infop info = png_create_info_struct(png);
+  if (!info) abort();
+
+  if (setjmp(png_jmpbuf(png))) abort();
+
+  png_init_io(png, fp);
+
+  // Output is 8bit depth, RGBA format.
+  png_set_IHDR(
+    png,
+    info,
+    width, height,
+    8,
+    PNG_COLOR_TYPE_RGBA,
+    PNG_INTERLACE_NONE,
+    PNG_COMPRESSION_TYPE_DEFAULT,
+    PNG_FILTER_TYPE_DEFAULT
+  );
+  png_write_info(png, info);
+
+  // To remove the alpha channel for PNG_COLOR_TYPE_RGB format,
+  // Use png_set_filler().
+  //png_set_filler(png, 0, PNG_FILLER_AFTER);
+
+  png_write_image(png, row_pointers);
+  png_write_end(png, NULL);
+
+  for(int y = 0; y < height; y++) {
+    free(row_pointers[y]);
+  }
+  free(row_pointers);
+
+  fclose(fp);
 }
 
 void FlashPhotoApp::applyFilterThreshold()

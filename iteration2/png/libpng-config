@@ -12,7 +12,7 @@
 # Modeled after libxml-config.
 
 version="1.6.16"
-prefix="/home/johnson/cs3081/iteration2/png"
+prefix="/home/linx0544/cs3081/iteration2/png"
 exec_prefix="${prefix}"
 libdir="${exec_prefix}/lib"
 includedir="${prefix}/include/libpng16"
