@@ -8,6 +8,7 @@
 
 #include "BaseGfxApp.h"
 #include <png.h>
+//#include <zlib.h>
 
 class ColorData;
 class PixelBuffer;
@@ -63,8 +64,8 @@ private:
         UI_QUIT
     };
     void setImageFile(const std::string & filepath);
-    png_bytep *read_png_file(const char *file_name);
-    void abort_(const char * s, ...);
+    void read_png_file(const char *file_name);
+    //void abort_(const char * s, ...);
     bool isValidImageFileName(const std::string & name);
     bool isValidImageFile(const std::string & name);
     bool hasSuffix(const std::string & str, const std::string & suffix);
@@ -152,6 +153,10 @@ private:
     
     // Previous mouse coordinates for interpolating mouse moves
     int m_mouseLastX, m_mouseLastY;
+    // int width, height;
+    // png_byte color_type;
+    // png_byte bit_depth;
+    // png_bytep *row_pointers;
 };
 
 

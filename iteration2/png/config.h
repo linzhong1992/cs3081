@@ -5,13 +5,21 @@
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the `feenableexcept' function. */
+<<<<<<< HEAD
 /* #undef HAVE_FEENABLEEXCEPT */
+=======
+#define HAVE_FEENABLEEXCEPT 1
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `m' library (-lm). */
+<<<<<<< HEAD
 /* #undef HAVE_LIBM */
+=======
+#define HAVE_LIBM 1
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 /* Define to 1 if you have the `z' library (-lz). */
 #define HAVE_LIBZ 1
@@ -23,7 +31,11 @@
 #define HAVE_MEMSET 1
 
 /* Define to 1 if you have the `pow' function. */
+<<<<<<< HEAD
 #define HAVE_POW 1
+=======
+/* #undef HAVE_POW */
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1

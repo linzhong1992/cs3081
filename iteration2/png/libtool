@@ -2,7 +2,11 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (libpng) 1.6.16
+<<<<<<< HEAD
 # Libtool was configured on host x-10-105-4-119.uofm-secure.wireless.umn.edu:
+=======
+# Libtool was configured on host csel-kh4250-26:
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -40,12 +44,17 @@ available_tags=""
 # ### BEGIN LIBTOOL CONFIG
 
 # A sed program that does not truncate output.
+<<<<<<< HEAD
 SED="/usr/bin/sed"
+=======
+SED="/bin/sed"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Sed that helps us avoid accidentally triggering echo(1) options like -n.
 Xsed="$SED -e 1s/^X//"
 
 # A grep program that handles long lines.
+<<<<<<< HEAD
 GREP="/usr/bin/grep"
 
 # An ERE matcher.
@@ -53,6 +62,15 @@ EGREP="/usr/bin/grep -E"
 
 # A literal string matcher.
 FGREP="/usr/bin/grep -F"
+=======
+GREP="/bin/grep"
+
+# An ERE matcher.
+EGREP="/bin/grep -E"
+
+# A literal string matcher.
+FGREP="/bin/grep -F"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Shell to use when invoking shell scripts.
 SHELL="/bin/sh"
@@ -71,7 +89,11 @@ AS="as"
 DLLTOOL="false"
 
 # Object dumper program.
+<<<<<<< HEAD
 OBJDUMP="false"
+=======
+OBJDUMP="objdump"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether or not to build shared libraries.
 build_libtool_libs=no
@@ -90,6 +112,7 @@ PATH_SEPARATOR=":"
 
 # The host system.
 host_alias=
+<<<<<<< HEAD
 host=x86_64-apple-darwin14.5.0
 host_os=darwin14.5.0
 
@@ -100,12 +123,28 @@ build_os=darwin14.5.0
 
 # A BSD- or MS-compatible name lister.
 NM="/usr/bin/nm"
+=======
+host=x86_64-unknown-linux-gnu
+host_os=linux-gnu
+
+# The build system.
+build_alias=
+build=x86_64-unknown-linux-gnu
+build_os=linux-gnu
+
+# A BSD- or MS-compatible name lister.
+NM="/usr/bin/nm -B"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether we need soft or hard links.
 LN_S="ln -s"
 
 # What is the maximum length of a command?
+<<<<<<< HEAD
 max_cmd_len=196608
+=======
+max_cmd_len=3458764513820540925
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Object file suffix (normally "o").
 objext=o
@@ -150,7 +189,11 @@ AR="ar"
 AR_FLAGS="cru"
 
 # How to feed a file listing to the archiver.
+<<<<<<< HEAD
 archiver_list_spec=""
+=======
+archiver_list_spec="@"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # A symbol stripping program.
 STRIP="strip"
@@ -161,7 +204,11 @@ old_postinstall_cmds="chmod 644 \$oldlib~\$RANLIB \$tool_oldlib"
 old_postuninstall_cmds=""
 
 # Whether to use a lock for old archive extraction.
+<<<<<<< HEAD
 lock_old_archive_extraction=yes
+=======
+lock_old_archive_extraction=no
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # A C compiler.
 LTCC="gcc"
@@ -170,6 +217,7 @@ LTCC="gcc"
 LTCFLAGS="-g -O2"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
+<<<<<<< HEAD
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([BCDEGRST][BCDEGRST]*\\)[	 ][	 ]*_\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 _\\2 \\2/p' | sed '/ __gnu_lto/d'"
 
 # Transform the output of nm in a proper C declaration.
@@ -183,6 +231,21 @@ global_symbol_to_c_name_address_lib_prefix="sed -n -e 's/^: \\([^ ]*\\)[ ]*\$/  
 
 # Specify filename containing input files for $NM.
 nm_file_list_spec=""
+=======
+global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"
+
+# Transform the output of nm in a proper C declaration.
+global_symbol_to_cdecl="sed -n -e 's/^T .* \\(.*\\)\$/extern int \\1();/p' -e 's/^[ABCDGIRSTW]* .* \\(.*\\)\$/extern char \\1;/p'"
+
+# Transform the output of nm in a C name address pair.
+global_symbol_to_c_name_address="sed -n -e 's/^: \\([^ ]*\\)[ ]*\$/  {\\\"\\1\\\", (void *) 0},/p' -e 's/^[ABCDGIRSTW]* \\([^ ]*\\) \\([^ ]*\\)\$/  {\"\\2\", (void *) \\&\\2},/p'"
+
+# Transform the output of nm in a C name address pair when lib prefix is needed.
+global_symbol_to_c_name_address_lib_prefix="sed -n -e 's/^: \\([^ ]*\\)[ ]*\$/  {\\\"\\1\\\", (void *) 0},/p' -e 's/^[ABCDGIRSTW]* \\([^ ]*\\) \\(lib[^ ]*\\)\$/  {\"\\2\", (void *) \\&\\2},/p' -e 's/^[ABCDGIRSTW]* \\([^ ]*\\) \\([^ ]*\\)\$/  {\"lib\\2\", (void *) \\&\\2},/p'"
+
+# Specify filename containing input files for $NM.
+nm_file_list_spec="@"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # The root where to search for dependent libraries,and in which our libraries should be installed.
 lt_sysroot=
@@ -200,6 +263,7 @@ need_locks="no"
 MANIFEST_TOOL=":"
 
 # Tool to manipulate archived DWARF debug symbol files on Mac OS X.
+<<<<<<< HEAD
 DSYMUTIL="dsymutil"
 
 # Tool to change global to local symbols on Mac OS X.
@@ -213,19 +277,42 @@ OTOOL="otool"
 
 # ldd/readelf like tool for 64 bit Mach-O binaries on Mac OS X 10.4.
 OTOOL64=":"
+=======
+DSYMUTIL=""
+
+# Tool to change global to local symbols on Mac OS X.
+NMEDIT=""
+
+# Tool to manipulate fat objects and archives on Mac OS X.
+LIPO=""
+
+# ldd/readelf like tool for Mach-O binaries on Mac OS X.
+OTOOL=""
+
+# ldd/readelf like tool for 64 bit Mach-O binaries on Mac OS X 10.4.
+OTOOL64=""
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Old archive suffix (normally "a").
 libext=a
 
 # Shared library suffix (normally ".so").
+<<<<<<< HEAD
 shrext_cmds="\`test .\$module = .yes && echo .so || echo .dylib\`"
+=======
+shrext_cmds=".so"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # The commands to extract the exported symbol list from a shared archive.
 extract_expsyms_cmds=""
 
 # Variables whose values should be saved in libtool wrapper scripts and
 # restored at link time.
+<<<<<<< HEAD
 variables_saved_for_relink="PATH DYLD_LIBRARY_PATH  GCC_EXEC_PREFIX COMPILER_PATH LIBRARY_PATH"
+=======
+variables_saved_for_relink="PATH LD_LIBRARY_PATH LD_RUN_PATH GCC_EXEC_PREFIX COMPILER_PATH LIBRARY_PATH"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Do we need the "lib" prefix for modules?
 need_lib_prefix=no
@@ -234,6 +321,7 @@ need_lib_prefix=no
 need_version=no
 
 # Library versioning type.
+<<<<<<< HEAD
 version_type=darwin
 
 # Shared library runtime path variable.
@@ -244,16 +332,35 @@ shlibpath_var=DYLD_LIBRARY_PATH
 
 # Is shlibpath searched before the hard-coded library search path?
 shlibpath_overrides_runpath=yes
+=======
+version_type=linux
+
+# Shared library runtime path variable.
+runpath_var=LD_RUN_PATH
+
+# Shared library path variable.
+shlibpath_var=LD_LIBRARY_PATH
+
+# Is shlibpath searched before the hard-coded library search path?
+shlibpath_overrides_runpath=no
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Format of library name prefix.
 libname_spec="lib\$name"
 
 # List of archive names.  First name is the real one, the rest are links.
 # The last name is the one that the linker finds with -lNAME
+<<<<<<< HEAD
 library_names_spec="\${libname}\${release}\${major}\$shared_ext \${libname}\$shared_ext"
 
 # The coded name of the library, if different from the real name.
 soname_spec="\${libname}\${release}\${major}\$shared_ext"
+=======
+library_names_spec="\${libname}\${release}\${shared_ext}\$versuffix \${libname}\${release}\${shared_ext}\$major \$libname\${shared_ext}"
+
+# The coded name of the library, if different from the real name.
+soname_spec="\${libname}\${release}\${shared_ext}\$major"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Permission mode override for installation of shared libraries.
 install_override_mode=""
@@ -265,13 +372,18 @@ postinstall_cmds=""
 postuninstall_cmds=""
 
 # Commands used to finish a libtool library installation in a directory.
+<<<<<<< HEAD
 finish_cmds=""
+=======
+finish_cmds="PATH=\\\"\\\$PATH:/sbin\\\" ldconfig -n \$libdir"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # As "finish_cmds", except a single script fragment to be evaled but
 # not shown.
 finish_eval=""
 
 # Whether we should hardcode library paths into libraries.
+<<<<<<< HEAD
 hardcode_into_libs=no
 
 # Compile-time system search path for libraries.
@@ -279,6 +391,15 @@ sys_lib_search_path_spec="/Applications/Xcode.app/Contents/Developer/Toolchains/
 
 # Run-time system search path for libraries.
 sys_lib_dlsearch_path_spec="/usr/local/lib /lib /usr/lib"
+=======
+hardcode_into_libs=yes
+
+# Compile-time system search path for libraries.
+sys_lib_search_path_spec="/soft/gcc-4.5.2/ubuntuamd1/lib/gcc/x86_64-unknown-linux-gnu/4.5.2 /soft/gcc-4.5.2/ubuntuamd1/lib64 /lib64 /usr/lib/x86_64-linux-gnu /usr/lib "
+
+# Run-time system search path for libraries.
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /lib/i386-linux-gnu /usr/lib/i386-linux-gnu /lib/i686-linux-gnu /usr/lib/i686-linux-gnu /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/nvidia-340 /usr/lib32/nvidia-340 /usr/lib/x86_64-linux-gnu/mir/clientplatform/mesa /lib32 /usr/lib32 /libx32 /usr/libx32 "
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether dlopen is supported.
 dlopen_support=unknown
@@ -290,6 +411,7 @@ dlopen_self=unknown
 dlopen_self_static=unknown
 
 # Commands to strip libraries.
+<<<<<<< HEAD
 old_striplib="strip -S"
 striplib="strip -x"
 
@@ -300,6 +422,18 @@ LD="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolcha
 # How to create reloadable object files.
 reload_flag=" -r"
 reload_cmds="\$LTCC \$LTCFLAGS -nostdlib \${wl}-r -o \$output\$reload_objs"
+=======
+old_striplib="strip --strip-debug"
+striplib="strip --strip-unneeded"
+
+
+# The linker used to build libraries.
+LD="/usr/bin/ld -m elf_x86_64"
+
+# How to create reloadable object files.
+reload_flag=" -r"
+reload_cmds="\$LD\$reload_flag -o \$output\$reload_objs"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Commands used to build an old-style archive.
 old_archive_cmds="\$AR \$AR_FLAGS \$oldlib\$oldobjs~\$RANLIB \$tool_oldlib"
@@ -311,31 +445,53 @@ CC="gcc"
 with_gcc=yes
 
 # Compiler flag to turn off builtin functions.
+<<<<<<< HEAD
 no_builtin_flag=" -fno-builtin -fno-rtti -fno-exceptions"
 
 # Additional compiler flags for building library objects.
 pic_flag=" -fno-common -DPIC"
+=======
+no_builtin_flag=" -fno-builtin"
+
+# Additional compiler flags for building library objects.
+pic_flag=" -fPIC -DPIC"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # How to pass a linker flag through the compiler.
 wl="-Wl,"
 
 # Compiler flag to prevent dynamic linking.
+<<<<<<< HEAD
 link_static_flag=""
+=======
+link_static_flag="-static"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Does compiler simultaneously support -c and -o options?
 compiler_c_o="yes"
 
 # Whether or not to add -lc for building shared libraries.
+<<<<<<< HEAD
 build_libtool_need_lc=no
+=======
+build_libtool_need_lc=yes
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether or not to disallow shared libs when runtime libs are static.
 allow_libtool_libs_with_static_runtimes=no
 
 # Compiler flag to allow reflexive dlopens.
+<<<<<<< HEAD
 export_dynamic_flag_spec=""
 
 # Compiler flag to generate shared objects directly from archives.
 whole_archive_flag_spec="\`for conv in \$convenience\\\"\\\"; do test  -n \\\"\$conv\\\" && new_convenience=\\\"\$new_convenience \${wl}-force_load,\$conv\\\"; done; func_echo_all \\\"\$new_convenience\\\"\`"
+=======
+export_dynamic_flag_spec="\${wl}--export-dynamic"
+
+# Compiler flag to generate shared objects directly from archives.
+whole_archive_flag_spec="\${wl}--whole-archive\$convenience \${wl}--no-whole-archive"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether the compiler copes with passing no objects directly.
 compiler_needs_object="no"
@@ -347,6 +503,7 @@ old_archive_from_new_cmds=""
 old_archive_from_expsyms_cmds=""
 
 # Commands used to build a shared archive.
+<<<<<<< HEAD
 archive_cmds="\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module"
 archive_expsym_cmds="sed 's,^,_,' < \$export_symbols > \$output_objdir/\${libname}-symbols.expsym~\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module \${wl}-exported_symbols_list,\$output_objdir/\${libname}-symbols.expsym"
 
@@ -360,13 +517,35 @@ with_gnu_ld="no"
 
 # Flag that allows shared libraries with undefined symbols to be built.
 allow_undefined_flag="\${wl}-undefined \${wl}dynamic_lookup"
+=======
+archive_cmds="\$CC -shared \$pic_flag \$libobjs \$deplibs \$compiler_flags \${wl}-soname \$wl\$soname -o \$lib"
+archive_expsym_cmds="echo \\\"{ global:\\\" > \$output_objdir/\$libname.ver~
+	    cat \$export_symbols | sed -e \\\"s/\\\\(.*\\\\)/\\\\1;/\\\" >> \$output_objdir/\$libname.ver~
+	    echo \\\"local: *; };\\\" >> \$output_objdir/\$libname.ver~
+	    \$CC -shared \$pic_flag \$libobjs \$deplibs \$compiler_flags \${wl}-soname \$wl\$soname \${wl}-version-script \${wl}\$output_objdir/\$libname.ver -o \$lib"
+
+# Commands used to build a loadable module if different from building
+# a shared archive.
+module_cmds=""
+module_expsym_cmds=""
+
+# Whether we are building with GNU ld or not.
+with_gnu_ld="yes"
+
+# Flag that allows shared libraries with undefined symbols to be built.
+allow_undefined_flag=""
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Flag that enforces no undefined symbols.
 no_undefined_flag=""
 
 # Flag to hardcode $libdir into a binary during linking.
 # This must work even if $libdir does not exist
+<<<<<<< HEAD
 hardcode_libdir_flag_spec=""
+=======
+hardcode_libdir_flag_spec="\${wl}-rpath \${wl}\$libdir"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Whether we need a single "-rpath" flag with a separated argument.
 hardcode_libdir_separator=""
@@ -392,14 +571,22 @@ hardcode_shlibpath_var=unsupported
 # Set to "yes" if building a shared library automatically hardcodes DIR
 # into the library and all subsequent libraries and executables linked
 # against it.
+<<<<<<< HEAD
 hardcode_automatic=yes
+=======
+hardcode_automatic=no
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Set to yes if linker adds runtime paths of dependent libraries
 # to runtime path list.
 inherit_rpath=no
 
 # Whether libtool must link a program against all its dependency libraries.
+<<<<<<< HEAD
 link_all_deplibs=yes
+=======
+link_all_deplibs=unknown
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 
 # Set to "yes" if exported symbols are required.
 always_export_symbols=no
@@ -1263,7 +1450,11 @@ exec_cmd=
 # Append VALUE to the end of shell variable VAR.
 func_append ()
 {
+<<<<<<< HEAD
 eval "${1}+=\${2}"
+=======
+    eval "${1}+=\${2}"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 } # Extended-shell func_append implementation
 
 # func_append_quoted var value
@@ -1279,7 +1470,11 @@ func_append_quoted ()
 # func_arith arithmetic-term...
 func_arith ()
 {
+<<<<<<< HEAD
 func_arith_result=$(( $* ))
+=======
+    func_arith_result=$(( $* ))
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 } # Extended-shell func_arith implementation
 
 
@@ -1287,7 +1482,11 @@ func_arith_result=$(( $* ))
 # STRING may not start with a hyphen.
 func_len ()
 {
+<<<<<<< HEAD
 func_len_result=${#1}
+=======
+    func_len_result=${#1}
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 } # Extended-shell func_len implementation
 
 
@@ -1304,7 +1503,11 @@ func_lo2o ()
 # func_xform libobj-or-source
 func_xform ()
 {
+<<<<<<< HEAD
 func_xform_result=${1%.*}.lo
+=======
+    func_xform_result=${1%.*}.lo
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 } # Extended-shell func_xform implementation
 
 

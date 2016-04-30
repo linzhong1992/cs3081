@@ -12,12 +12,20 @@
 # Modeled after libxml-config.
 
 version="1.6.16"
+<<<<<<< HEAD
 prefix="/home/johnson/cs3081/iteration2/png"
+=======
+prefix="/home/linx0544/cs3081/iteration2/png"
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 exec_prefix="${prefix}"
 libdir="${exec_prefix}/lib"
 includedir="${prefix}/include/libpng16"
 libs="-lpng16"
+<<<<<<< HEAD
 all_libs="-lpng16 -lz "
+=======
+all_libs="-lpng16 -lm -lz -lm "
+>>>>>>> 26787ea5f901172d6662fe8532b1377194227e7b
 I_opts="-I${includedir}"
 L_opts="-L${libdir}"
 R_opts=""

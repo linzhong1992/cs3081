@@ -7,7 +7,7 @@
 EXECUTABLE = FlashPhoto
 SOURCE_DIR = src
 OBJECT_DIR = build
-
+CURR_DIR = $(shell pwd)
 
 # Define the list of files to compile for this project. Defaults to all
 # of the .cpp files in the source directory.
@@ -30,9 +30,9 @@ LDFLAGS = -g
 
 # We use the GLUI library for our graphical user interface.  So, we
 # also need to add compiler and linker arguments for GLUI.
-GLUI_PATH = ./glui
+GLUI_PATH = $(CURR_DIR)/glui
 INCLUDE += -I$(GLUI_PATH)/include
-LINK_GLUI_LIBS +=  -L$(GLUI_PATH)/lib/ -lglui
+LINK_LIBS +=  -L$(GLUI_PATH)/lib/ -lglui -lpthread
 GLUI_LIB = $(GLUI_PATH)/lib/libglui.a
 
 
@@ -40,9 +40,9 @@ GLUI_LIB = $(GLUI_PATH)/lib/libglui.a
 # This is specified differently depending on whether we are on linux or OSX.
 UNAME = $(shell uname)
 ifeq ($(UNAME), Darwin) # Mac OSX 
-	LINK_GLUI_LIBS += -framework glut -framework opengl
+	LINK_LIBS += -framework glut -framework opengl
 else # LINUX
-	LINK_GLUI_LIBS += -lglut -lGL -lGLU
+	LINK_LIBS += -lglut -lGL -lGLU
 endif
 
 # On some lab machines the glut and opengl libraries are located in the directory
@@ -51,16 +51,15 @@ endif
 # for libraries as well.  Uncomment the line below.
 #NVIDIA_LIB =  /usr/lib/nvidia-304  #or whichever nvidia driver number shows up in that dir
 ifneq ($(NVIDIA_LIB), )
-	LINK_GLUI_LIBS += -L$(NVIDIA_LIB)
+	LINK_LIBS += -L$(NVIDIA_LIB)
 endif
 
 # We use the PNG library for uploading .png images.  So, we
 # also need to add compiler and linker arguments for PNG.
-PNG_PATH = ./png
+PNG_PATH = $(CURR_DIR)/png
 INCLUDE += -I$(PNG_PATH)/include
-LINK_PNG_LIBS +=  -L$(PNG_PATH)/lib/ -lpng
+LINK_LIBS +=  -L$(PNG_PATH)/lib/ -lpng -lz
 PNG_LIB = $(PNG_PATH)/lib/libpng.a
-
 
 
 
@@ -84,7 +83,7 @@ $(OBJECT_DIR):
 	mkdir -p $(OBJECT_DIR)
 
 $(EXECUTABLE): $(GLUI_LIB) $(PNG_LIB) $(OBJFILES)
-	$(CC) $(LDFLAGS) $(OBJFILES) $(LINK_GLUI_LIBS) $(LINK_PNG_LIBS) -o $@
+	$(CC) $(LDFLAGS) $(OBJFILES) $(LINK_LIBS) -o $@
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDE)  -o $@ $<
@@ -97,6 +96,6 @@ $(GLUI_LIB):
 
 $(PNG_LIB):
 	cd $(PNG_PATH);\
-	./configure --prefix=/home/johnson/cs3081/iteration2/png --enable-shared=no
+	./configure --prefix=$(PNG_PATH) --enable-shared=no
 	# $(MAKE) -C $(PNG_PATH) check
 	$(MAKE) -C $(PNG_PATH) install
